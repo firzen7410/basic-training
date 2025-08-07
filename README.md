@@ -4,28 +4,40 @@
 
 ### 1. 這是什麼
 
-功能強大的Python 整合式開發環境（IDE）
+>功能強大的Python 整合式開發環境（IDE）
 
 ### 2. 怎麼使用它
 
-#### 新增專案：左上角File>New Project>選擇開啟哪一種專案>create
+* 新增專案  
+  * 左上角File > New Project > 選擇開啟哪一種專案 > create
 
-#### 新增檔案：右上角New File or Directory>選擇甚麼類型的檔案(副檔名)>python選項有三種類型python file、python unit test、python stub，通常選python file就好
+* 新增檔案
+  * 右上角New File or Directory > 選擇甚麼類型的檔案(副檔名) > python
+  * 選項有三種：python file、python unit test、python stub，通常選python file就好
 
-#### 執行程式：到程式頁面右鍵>點選RUN'檔名'，或者切換右上角程式然後ctrl+shift+f10
+* 執行程式
+  * 程式頁面右鍵 > 點選RUN'檔名'，或者切換右上角程式然後ctrl+shift+f10
 
-#### debugger：點選行號設置breakpoint後，到程式頁面右鍵>點選debugger'檔名'，或者切換右上角程式然後shift+f9，進入debugger模式之後按f7逐行執行並觀察變數值
+* debugger
+  * 點擊行號設置breakpoint後，到程式頁面右鍵 > 點選debugger'檔名'，或者切換右上角程式然後shift+f9，進入debugger模式之後按f8逐行執行並觀察變數值
 
-#### 設定執行參數：左上角選單>RUN>Edit Configuration>選擇程式>在script parameters填入參數，這樣下次執行程式就會帶入這些參數了
+* 設定執行參數
+  * 左上角選單 > RUN>Edit Configuration > 選擇程式 > 在script parameters填入參數，這樣下次執行程式就會帶入這些參數了
 
-#### 快速尋找方法或參數：游標停在function或class上>ctrl+B可以找到它的定義方式；相反也可以找誰使用這個function或class，在該method上右鍵>find usage(alt+f7)
+* 快速尋找方法或參數
+  * 游標停在function或class上 > ctrl+B可以找到它的定義方式
+  * 相反也可以找誰使用這個function或class，在該method上右鍵 > find usage (alt+f7)
 
-#### 快速縮排：ctrl+alt+L
+* 快速縮排
+  * ctrl+alt+L
 
-#### 配置虛擬環境：點右下角管理interpreter和新增interpreter這個頁面可以查看當前的虛擬環境為何，新增虛擬環境或選擇現有的虛擬環境、管理環境內的套件
-#### poetry：修改config，讓虛擬環境可以建在專案裡，>>poetry config --list查看，virtualenvs.in-project是我們要修改的目標，>>poetry config virtualenvs.in-project true，到專案目錄建一個poetry_env/，開powershell進到目錄裡輸入poetry init，會產生一個pyproject.toml，
-#### 這裡會記錄安裝的套件，假設安裝flask，這裡就只會顯示flask (>=3.1.1,<4.0.0)，poetry的好處就在他會區分哪些是我們主動安裝的套件，以及那些是基於此套件安裝的相依套件
-#### 輸入poetry env use python建立虛擬環境(出現.env)，輸入protry shell進入虛擬環境，但是終端機跟上方程式是分開的，要點右下角add new interpreter>>add local interpreter>>select existing，path to poetry是poetry下載後的原始路徑，poetry env use是剛剛創的poetry_env/.venv/script/python，這樣pycharm就可以讀到這個虛擬環境了
+* 配置虛擬環境
+  * 點右下角管理interpreter和新增interpreter這個頁面可以查看當前的虛擬環境為何，新增虛擬環境或選擇現有的虛擬環境、管理環境內的套件
+* poetry
+  1. 修改config，讓虛擬環境可以建在專案裡  
+  `poetry config --list`查看設定，`virtualenvs.in-project`是我們要修改的目標，輸入`poetry config virtualenvs.in-project = true`
+  2. 到專案目錄建一個poetry_env/，從terminal進到目錄裡輸入`poetry init`，會產生pyproject.toml檔案，tomel檔會記錄安裝的套件，假設安裝flask，這裡就只會顯示`flask (>=3.1.1,<4.0.0)`，poetry的好處就在他會區分哪些是我們主動安裝的套件，以及那些是基於此套件安裝的相依套件
+  3. 輸入`poetry env use python`建立虛擬環境(出現.env)，輸入`protry shell`進入虛擬環境，但是終端機跟上方程式是分開的，要點右下角`add new interpreter` > `add local interpreter` > `select existing`，`path to poetry`是poetry下載後的原始路徑可以用poetry ，`poetry env use`是剛剛創的poetry_env/.venv/script/python，這樣pycharm就可以讀到這個虛擬環境了
 #### requirement.txt:
 #### 匯出(poetry)
 `poetry export -f requirements.txt --output requirements.txt --without-hashes`
