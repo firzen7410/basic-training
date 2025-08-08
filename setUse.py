@@ -16,14 +16,13 @@ temTuple2 = ({5, 3, 43, 1}, 0, 3)
 str1 = "hello world"
 temDict = {'jack': '114514'}
 
-
+#用於測試輸入的類型是否可hash
 def hashTest(test):
     try:
         hash(test)
         print(test, 'is hashable');
     except(TypeError):
         print(test, 'TypeError occured');
-
 
 hashTest(l)
 hashTest(temTuple)
@@ -33,11 +32,12 @@ hashTest(temDict)
 set1.add(temTuple)
 print('set1 after added:', set1)
 
-# 刪除
+# 刪除，使用remove刪除不存在元素時會報錯，discard不會
 try:
     set1.remove(1024)
 except(KeyError):
     print('KeyError')
+
 print(set1)
 print(set2)
 

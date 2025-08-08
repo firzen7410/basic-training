@@ -8,7 +8,6 @@
 7. list comprehension
 """
 import copy
-from copy import deepcopy
 
 # ================================
 # 1. 建立 List
@@ -19,10 +18,24 @@ print("原始 l =", l)
 # ================================
 # 2. 使用split或list()轉成List
 # ================================
+#List()
 str1 = "he ll o wor ld!"
-print("\n字串使用 split:", str1.split())  # 預設依空白切分
-
+class student():
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    def __iter__(self):
+        return iter((self.name,self.age))
+jack = student("jack", 25)
+l=[]
+for i in jack:
+   l.append(i)
+print(l)
+print(list(jack))
 print("字串轉 list:", list(str1))  # 轉成字元 list
+
+#split
+print("\n字串使用 split:", str1.split())  # 預設依空白切分
 
 tuple_data = ('hello', 'world')
 print("Tuple 轉 list:", list(tuple_data))
@@ -51,13 +64,13 @@ for i in range(-1, -4, -1):
 
 print("\nslice範例:")
 #格式:l[start:stop:step]，如果step>0，start預設為1，stop為-1；如果step<0，start預設為-1，stop為-len(list)-1
-print("l1[2:7:2] ->", l2[2:7:2])
-print("l1[::-2] (反向每隔 2 個取一個) ->", l2[::-2])
+print("l2[2:7:2] ->", l2[2:7:2])
+print("l2[::-2] (反向每隔 2 個取一個) ->", l2[::-2])
 print("l2[:3:-1]",l2[:3:-1])
 
 # slice賦值（可用任何 iterable 取代）
-l1[2:5] = "apple"
-print("切片賦值後:", l1)
+l2[2:5] = "apple"
+print("slice賦值後:", l2)
 
 # ================================
 # 5. 複製方式比較
