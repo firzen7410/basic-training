@@ -33,24 +33,25 @@
 
 * 配置虛擬環境
   * 點右下角管理interpreter和新增interpreter這個頁面可以查看當前的虛擬環境為何，新增虛擬環境或選擇現有的虛擬環境、管理環境內的套件
-* poetry
+* poetry建立流程
   1. 修改config，讓虛擬環境可以建在專案裡  
   `poetry config --list`查看設定，`virtualenvs.in-project`是我們要修改的目標，輸入`poetry config virtualenvs.in-project = true`
   2. 到專案目錄建一個poetry_env/，從terminal進到目錄裡輸入`poetry init`，會產生pyproject.toml檔案，tomel檔會記錄安裝的套件，假設安裝flask，這裡就只會顯示`flask (>=3.1.1,<4.0.0)`，poetry的好處就在他會區分哪些是我們主動安裝的套件，以及那些是基於此套件安裝的相依套件
   3. 輸入`poetry env use python`建立虛擬環境(出現.env)，輸入`protry shell`進入虛擬環境，但是終端機跟上方程式是分開的，要點右下角`add new interpreter` > `add local interpreter` > `select existing`，`path to poetry`是poetry下載後的原始路徑可以用poetry ，`poetry env use`是剛剛創的poetry_env/.venv/script/python，這樣pycharm就可以讀到這個虛擬環境了
-#### requirement.txt:
-#### 匯出(poetry)
-`poetry export -f requirements.txt --output requirements.txt --without-hashes`
-#### 以上指令會把 pyproject.toml 內的 dependencies 匯出成 pip 用的格式
-#### 匯入(poetry)不使用requirement.txt，用pyproject.toml
-`git clone https://github.com/someone/awesome-project.git`  
-`cd awesome-project`  
-`poetry install`
-#### 匯出(使用pip)
-`pip freeze > requirements.txt`
-#### 使用 pip 安裝 requirements.txt 中的套件
-`pip install -r requirements.txt`
-
+* requirement.txt的匯出與匯入:
+  * poetry 
+    * 匯出  
+`poetry export -f requirements.txt --output requirements.txt --without-hashes`  
+ 以上指令會把 pyproject.toml 內的 dependencies 匯出成 pip 用的格式
+    * 匯入(poetry 基本不使用requirement.txt，用pyproject.toml)  
+    `git clone https://github.com/someone/awesome-project.git`  
+    `cd awesome-project`  
+    `poetry install`
+  * pip
+    * 匯出  
+      `pip freeze > requirements.txt`
+    * 匯入  
+      `pip install -r requirements.txt`
 ### 3. 為什麼需要它
 
 ...
