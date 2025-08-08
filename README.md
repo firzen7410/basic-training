@@ -59,15 +59,21 @@
 ## 二、Python 程式基礎
 
 ### 1. 資料結構（List / Dict / Set / Tuple）
-#### set的特性：
-#### 唯一性:set中的元素不能重複，重複的元素會被刪除
-#### 只要是不可變的、可hash的都可以放進set，像list、dict、set就不能放進set
-#### 相關函式：len(s), s.add(), s.remove(), s.discard(), s.clear(), s.union(), s.intersection(), s.difference()
-#### discard和remove的差別:如果該元素不存在，discard不會報錯
+* set
+  * 特性：
+    * set中的元素不能重複，重複的元素會被刪除
+      * 沒有順序，每次印出可能不同
+    * 只要是不可變的且可hash的都可以放進set，像是int, string, tuple，反之像list、dict、set就不能放進set
+  * 相關函式：len(s), s.add(), s.remove(), s.discard(), s.clear(), s.union(), s.intersection(), s.difference()
+    * discard和remove的差別:如果該元素不存在，discard不會報錯
 
-#### List的特性：有序性
-#### 建立陣列的方式：1.放入中括號並以逗點隔開:2.使用List()將iterable(for i in ...)的物件轉成List，像字串、tuple、dict； 3.split()可以將一個字串根據特定的分割符號，拆分成list
-...
+* List的特性
+  * 有序性
+  * 建立陣列的方式：
+    1. 放入中括號並以逗點隔開
+    2. 使用List()將iterable(for i in ...)的物件轉成List，像字串、tuple、dict
+    3. split()可以將一個字串根據特定的分割符號，拆分成list
+    * 
 
 ### 2. 函式與引數
 
