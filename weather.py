@@ -1,5 +1,6 @@
 # weather.py
 import requests
+import flask
 
 def get_weather(city: str):
     url = f"http://wttr.in/{city}?format=3"
