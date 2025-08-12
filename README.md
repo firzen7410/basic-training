@@ -62,28 +62,67 @@
 * set
   * 特性：
     * set中的元素不能重複，重複的元素會被刪除
-      * 沒有順序，每次印出可能不同
+    * 屬於可變，定義好之後可以增減元素
+    * 沒有順序，每次印出可能不同
     * 只要是不可變的且可hash的都可以放進set，像是int, string, tuple，反之像list、dict、set就不能放進set
 
-* List的特性
+* List
   * 有序性
+  * 可放入重複
+  * 屬於可變，定義好之後可以增減元素
+  * 可放入任何資料型態的元素
   * 建立陣列的方式：
     1. 放入中括號並以逗點隔開
     2. 使用List()將iterable(for i in ...)的物件轉成List，像字串、tuple、dict，那甚麼是iterable？就是目標物件具有__iter__()或是__getitem__()方法，即使是自訂的物件也可以透過list()轉成list
        * 我自訂了一個student class，並定義了__iter__這個method，這裡比較偷吃步，我是先把name跟age包成一個tuple再透過iter()呼叫tuple的__iter__()method，回傳一個迭代器object，關於這個迭代器，由於最底層實作方式是CPython，有點複雜，暫時先關注這個iterator能做甚麼就好，list()就相當於利用iterator做append的動作，使傳入的物件變成list
     3. split()可以將一個字串根據特定的分割符號，拆分成list，這算是專門為string服務的function，其他人要用就得先轉乘string
-  
+* tuple
+  * 有序性
+  * 可放入重複
+  * 屬於不可變，但是如果放入可變的資料型態，如list，set..等，還是可以改動元素內的值
+  * 可放入任何資料型態的值
+* dictionary
+  * 無序
+  * key值必須唯一，且不可變，value可以是任意資料型態
+  * dict底層使用hash table實作
+  * hash table
+    * 將key值經過hash function後，得到index(hash值)，而我們的table就是紀錄index和key的對應關係，但是不同key值hash過可能會對應到相同index，稱為碰撞，因此hash table 加入link list使用指標指到新加入key值
 
 ### 2. 函式與引數
-
-...
+ *  Positional Arguments
+   * 接收不定數量的參數，並用tuple包起來，
+ * keyword arguments
+   * 接收不定數量的key=value格式參數，並用dict包起來
 
 ### 3. 模組與封裝
+* 使用import 檔名.py，程式內使用檔名.function就可以使用
+* 為什麼需要__name__='main':
+  * 主要用在module的程式裡，讓使用module的其他程式部會執行到main裡面的內容，區分的作用
 
-...
 
+### 4. python延伸練習
+ * logging
+ * python命名
+   * Package（套件）
+     * 全小寫
+     * 可用底線 `_` 分隔，單字為主
+     * 名詞為主，簡短且有意義
+   * Class
+     * PascalCase（首字母大寫的駝峰式）
+   * function
+     * 全小寫
+     * 單字之間用底線隔開
+   * Variable
+     * 全小寫
+     * 單字之間用底線分隔
+
+單字之間用底線 _ 分隔
 ## 三、Git 基本操作
-
+* 在git中檔案有四種狀態，untracked, unmodified, modified, staged
+  * 使用git add 將untracked檔案移到stage
+  * 使用git commit -m "訊息" 可以提交版本訊息，建立新版本
+  * 使用git push 將本地端commit的repo發佈到遠端
+  * 
 ### 1. Git 是什麼
 
 ...
