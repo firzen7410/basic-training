@@ -122,7 +122,6 @@
   * 使用git add 將untracked檔案移到stage
   * 使用git commit -m "訊息" 可以提交版本訊息，建立新版本
   * 使用git push 將本地端commit的repo發佈到遠端
-  * 
 ### 1. Git 是什麼
 
 ...
@@ -134,10 +133,4 @@
 ### 3. 常見操作說明
 
 ...
-
-## 四、附錄：程式碼範例
-
-- `bmi.py`：BMI 計算器，支援命令列參數
-- `log_example.py`：日誌記錄與輸出
-- `env_example.py`：如何使用 `.env` 管理環境變數
 
