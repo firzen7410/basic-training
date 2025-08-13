@@ -127,7 +127,8 @@
   2. 本地專案terminal輸入`git init`
   3. `git add .`將檔案加入追蹤
   4. `git commit -M main`將當前分支強制命名為main
-  5. git remo
+  5. `git remoto add <url>`:跟遠端儲存庫連接
+  6. `git push -u origin main`:將本地已提交檔案上傳至遠端
 ### 1. Git 是什麼
 * 
 ### 2. 如何使用

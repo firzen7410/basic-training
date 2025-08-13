@@ -8,7 +8,7 @@ print("原始 l =", l)
 
 # 1.中括號、list()、split()
 # list()    只要是iterable的物件都可以轉成list
-class student():
+class Student:
     def __init__(self, name, age):
         self.name = name
         self.age = age
@@ -17,7 +17,7 @@ class student():
         return iter((self.name, self.age))
 
 
-jack = student("jack", 25)
+jack = Student("jack", 25)
 # list()做的事就相當於，利用iterator將物件內的元素append到list
 temList = []
 for i in jack:
@@ -114,12 +114,12 @@ print("使用map平方",list(map(square, l)))
 
 #filter
 #語法:filter(function, object)，function必須回傳boolean value，以判斷物件內元素是否篩選掉，true留下，false離開
-def isEven(num):
+def iseven(num):
     if num % 2 == 0:
         return True
     else:
         return False
-print("使用filter篩選偶數",list(filter(isEven, l)))
+print("使用filter篩選偶數",list(filter(iseven, l)))
 
 # 4. offset & slice
 # offset
@@ -159,11 +159,11 @@ print("篩選偶數element:",[x for x in l3 if x % 2 == 0])
 # 使用list comprehension 產生巢狀list
 print("巢狀:",[(i, j) for i in range(4) for j in range(4)])
 
-def qsort(A):
-    if (A == []):
-        return A
-    pivot = A[0]
-    return qsort([x for x in A[1:] if x < pivot]) + [pivot] + qsort([x for x in A[1:] if x >= pivot])
+def qsort(l1):
+    if not l1:
+        return l1
+    pivot = l1[0]
+    return qsort([x for x in l1[1:] if x < pivot]) + [pivot] + qsort([x for x in l1[1:] if x >= pivot])
 print("after qsort:",qsort(l3))
 
 # 5. 複製方式比較
