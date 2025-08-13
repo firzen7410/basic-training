@@ -122,10 +122,14 @@
   * 使用git add 將untracked檔案移到stage
   * 使用git commit -m "訊息" 可以提交版本訊息，建立新版本
   * 使用git push 將本地端commit的repo發佈到遠端
+* 流程
+  1. 在github創建遠端儲存庫
+  2. 本地專案terminal輸入`git init`
+  3. `git add .`將檔案加入追蹤
+  4. `git commit -M main`將當前分支強制命名為main
+  5. git remo
 ### 1. Git 是什麼
-
-...
-
+* 
 ### 2. 如何使用
 
 ...
