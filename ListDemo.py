@@ -26,12 +26,11 @@ print(temList)
 print(list(jack))
 tuple_data = ('hello', 'world')
 print("Tuple 轉 list:", list(tuple_data))
-# split()
-str1 = "he ll o wor ld!"
+str1 = "hell  o wor ld!"
 print("字串轉 list:", list(str1))  # 轉成字元 list
 
 # split
-print("字串使用 split:", str1.split())  # 預設依空白切分
+print("字串使用 split:", str1.split(','))  # 預設依空白切分
 
 # 2.特性
 print("\n=== 特性 ===")
@@ -76,7 +75,7 @@ l[2] = "update"
 # for loop
 for item in l:
     print(item)
-# 取索引與值
+# 取索引與值，轉dict的橋樑
 for idx, val in enumerate(l):
     print(f"{idx}: {val}")
 
@@ -106,20 +105,26 @@ print("使用join接起list內的所有項目，變成一個字串，要用一�
 
 # map
 # 語法:map(function, object)，對iterable物件(不是list專屬)內每一個元素執行function，回傳一個map物件，iterable，所以可以用List()轉成list，或者for loop遍歷
-l=[1,2,3,4,5,6]
+l = [1, 2, 3, 4, 5, 6]
+
 
 def square(num):
     return num ** 2
-print("使用map平方",list(map(square, l)))
 
-#filter
-#語法:filter(function, object)，function必須回傳boolean value，以判斷物件內元素是否篩選掉，true留下，false離開
+
+print("使用map平方", list(map(square, l)))
+
+
+# filter
+# 語法:filter(function, object)，function必須回傳boolean value，以判斷物件內元素是否篩選掉，true留下，false離開
 def iseven(num):
     if num % 2 == 0:
         return True
     else:
         return False
-print("使用filter篩選偶數",list(filter(iseven, l)))
+
+
+print("使用filter篩選偶數", list(filter(iseven, l)))
 
 # 4. offset & slice
 # offset
@@ -153,18 +158,22 @@ print("slice賦值後:", l2)
 # 語法:[ 表達式 for 變數 in 可迭代物件 if 條件判斷式 ]
 print("\n=== list comprehension ===")
 l3 = [11, 4, 30, 7, 5, 0, 9, 15]
-print("原始l3:",l3)
-print("篩選偶數element:",[x for x in l3 if x % 2 == 0])
+print("原始l3:", l3)
+print("篩選偶數element:", [x for x in l3 if x % 2 == 0])
 
 # 使用list comprehension 產生巢狀list
-print("巢狀:",[(i, j) for i in range(4) for j in range(4)])
+print("巢狀:", [(i, j) for i in range(4) for j in range(4)])
 
+
+# qsort
 def qsort(l1):
     if not l1:
         return l1
     pivot = l1[0]
     return qsort([x for x in l1[1:] if x < pivot]) + [pivot] + qsort([x for x in l1[1:] if x >= pivot])
-print("after qsort:",qsort(l3))
+
+
+print("after qsort:", qsort(l3))
 
 # 5. 複製方式比較
 print("\n=== 複製方式比較 ===")
@@ -194,5 +203,3 @@ print("slice複製： a=", a, "b=", b, "(a是巢狀結構，新複製的外層li
 c = copy.deepcopy(a)
 a[5][0] = 123
 print("deepcopy： a=", a, "c=", c, "(使用deepcopy完全複製內外層物件)")
-
-

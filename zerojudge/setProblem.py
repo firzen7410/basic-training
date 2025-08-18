@@ -37,52 +37,29 @@
 # 1
 # 2
 
-import io, sys
-sys.stdin = io.StringIO("""
-6 5
-0 3
-5 4
-5 3
-2 1
-0 5
-""")
-data = sys.stdin.read().strip().split("\n")
-i = 0
-tmpSet=set()
-circle = []
-while i < len(data):
-    n, k = map(int, data[i].split())
-    i += 1
+#disjoint set
 
-    for _ in range(k):
-        isNeedNew = 0
-        a, b = map(int, data[i].split())
-        if not tmpSet:
-            tmpSet.add(a)
-            tmpSet.add(b)
-            isNeedNew = 1
-        else:
-            for x in circle:
-                if a in x or b in x:
-                    x.add(a)
-                    x.add(b)
-                    isNeedNew = 0
-                    break
-                else:
-                    isNeedNew = 1
-                    tmpSet.clear()
-                    tmpSet.add(a)
-                    tmpSet.add(b)
-        if isNeedNew:
+while True:
+    try:
+        n,k = map(int, input().split())
+        tmpSet = set()
+        circle = []
+        ans = []
+        for i in range(k):
+            p1,p2 = map(int, input().split())
+            tmpSet.add(p1)
+            tmpSet.add(p2)
             circle.append(tmpSet.copy())
-        i+=1
+            tmpSet.clear()
+        for g in range(len(circle)):
+            for h in range(len(circle)):
+                if circle[g] & circle[h]:
+                    circle[h].update(circle[g])
 
-print(circle)
-
-#check merge
-for x in circle:
-    for y in circle:
-        if x != y and (x & y) :
-            for element in x:
-                element.add(y)
+        for s in circle:
+            if s not in ans:
+                ans.append(s.copy())
+        print(len(ans))
+    except:
+        break
 

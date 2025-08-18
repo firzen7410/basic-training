@@ -1,12 +1,17 @@
 import logging
 
-#預設使用root的logger
-#預設只輸出 warning 及比 warning 更嚴重的訊息
-
-#logging有四個核心組件:logger, handler, formatter, level
+# 預設使用root的logger
+# 預設只輸出 warning 及比 warning 更嚴重的訊息
+# CRITICAL（50）
+# ERROR（40）
+# WARNING（30）
+# INFO（20）
+# DEBUG（10）
+# NOTSET（0）
+# logging有四個核心組件:logger, handler, formatter, level
 
 # 自行建立logger，命名dev
-dev_logger=logging.getLogger('dev')
+dev_logger = logging.getLogger('dev')
 # 設置logger等級
 dev_logger.setLevel(logging.DEBUG)
 
@@ -20,10 +25,10 @@ file_handler.setLevel(logging.DEBUG)
 # 設置formatter
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 file_handler.setFormatter(formatter)
-#綁定handler
+# 綁定handler
 dev_logger.addHandler(file_handler)
 dev_logger.addHandler(console_handler)
 try:
-    a= {[1024]:"jack"}
+    a = {[1024]: "jack"}
 except Exception as e:
     dev_logger.exception("發生錯誤")

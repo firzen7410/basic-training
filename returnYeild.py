@@ -1,2 +1,10 @@
-power = (x**2  for x in range(100))
-print(type(power))
+def test():
+    for i in range(10):
+        yield i
+
+
+a = test()
+print(next(a))
+print(next(a))
+print(next(a))
+print(next(a))

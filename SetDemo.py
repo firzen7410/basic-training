@@ -5,10 +5,12 @@ set2 = set()
 
 # 2. 特性
 print('\n=== 特性 ===')
-#可變
-#無序
-#重複元素會被刪除
+# 可變
+# 無序
+# 重複元素會被刪除
 print('set1=', set1)
+set1.add(10)
+print(set1)
 
 print('=== 元素型別限制 ===')
 # 只要不可變&可被hash就可以放入set，像int, string, tuple(但如果包含list這種可變物件就無法加入)

@@ -40,3 +40,9 @@ Traceback (most recent call last):
     a= {[1024]:"jack"}
        ^^^^^^^^^^^^^^^
 TypeError: unhashable type: 'list'
+2025-08-15 13:49:32,666 - ERROR - µo¥Í¿ù»~
+Traceback (most recent call last):
+  File "C:\Users\trjhang\PycharmProjects\forTraining\logDemo.py", line 27, in <module>
+    a= {[1024]:"jack"}
+       ^^^^^^^^^^^^^^^
+TypeError: unhashable type: 'list'

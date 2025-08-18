@@ -1,6 +1,6 @@
 # weather.py
 import requests
-import flask
+
 
 def get_weather(city: str):
     url = f"http://wttr.in/{city}?format=3"
@@ -9,6 +9,7 @@ def get_weather(city: str):
         print(response.text)
     else:
         print("Failed to retrieve weather data.")
+
 
 if __name__ == "__main__":
     get_weather("Taipei")

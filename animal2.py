@@ -1,4 +1,4 @@
-from animal import Animal, Bird, Duck
+import animal
 
-a=Animal()
-a.eat()
+a = animal.Animal()
+print(a.eat())
