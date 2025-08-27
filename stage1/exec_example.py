@@ -16,3 +16,4 @@ def multiply(a1, a2):
 
 for i in range(10):
     print(calculate(i, i + 1))
+calculate(multiply(2, 3), add(3, 4))

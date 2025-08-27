@@ -22,6 +22,7 @@ console_handler.setLevel(logging.INFO)
 # Header:輸出到檔案
 file_handler = logging.FileHandler('logDemo.log')
 file_handler.setLevel(logging.DEBUG)
+
 # 設置formatter
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 file_handler.setFormatter(formatter)

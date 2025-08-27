@@ -1,5 +1,6 @@
 # 動物類別
 class Animal:
+
     def eat(self):
         pass
 
@@ -16,5 +17,15 @@ class Duck(Animal):
         print("Duck fly method is called.")
 
 
+def test():
+    animal = Animal()
+    animal.eat()
+
+
+test()
+
+a = Animal()
+b = Animal()
+
 if __name__ == '__main__':
-    print("來亂的")
+    print("animal.py")
