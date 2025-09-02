@@ -10,3 +10,4 @@ mode = os.getenv("MODE")
 key = os.getenv("KEY")
 
 print(api_key, debug)
+print(mode, key)
