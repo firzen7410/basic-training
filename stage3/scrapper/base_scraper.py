@@ -1,21 +1,38 @@
+import time
+from datetime import datetime
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from stage3.scrapper.database_handler import DatabaseHandler
 
 
 class BaseScraper:
     def __init__(self, driver, scraper_log):
         self.driver = driver
         self.scraper_log = scraper_log
+        self.db_handler = DatabaseHandler(self.scraper_log)
+
+    def _log(self, task_name, status, message, level="INFO"):
+        log_data = {
+            "task_name": task_name,
+            "status": status,
+            "message": message,
+            "level": level,
+            "execute_at": datetime.now()
+        }
+        self.db_handler.insert_log(log_data)
+
+        # 同步寫進 scraper_log
+        getattr(self.scraper_log, level.lower())(message)
 
     def navigate(self, url):
         try:
-            self.scraper_log.info(f"導航到: {url}")
             self.driver.get(url)
+            self._log("導航", "success", f"導航到{url}", "DEBUG")
             return True
         except Exception as e:
-            self.scraper_log.error(f"導航失敗: {e}")
+            self._log("導航", "failed", f"導航失敗:{e}", "ERROR")
             return False
 
     def get_page_source(self):
@@ -26,7 +43,7 @@ class BaseScraper:
         try:
             return self.driver.find_element(by, value)
         except NoSuchElementException:
-            self.scraper_log.warning(f"找不到元素: {value}")
+            self._log(f"find_element:{value}", "failed", "ERROR:找不到該元素", "ERROR")
             return None
 
     def wait_for_element(self, by, value, timeout):
@@ -36,14 +53,29 @@ class BaseScraper:
             )
             return wait
         except TimeoutException:
-            self.scraper_log.error(f"等待元素可點擊超時: {value}")
+            self._log(f"wait_for_element:{value}", "failed", "ERROR:等待元素超時", "ERROR")
             return None
+
+    def move_to_element(self, element):
+        if element is None:
+            self.scraper_log.warning("move_to_element: element 為 None")
+            return False
+        try:
+            self.driver.execute_script(
+                "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
+                element
+            )
+            time.sleep(1)  # 稍微等一下捲動完成
+            return True
+        except Exception as e:
+            self._log(f"move_to_element:{element}", f"failed:{e}", "捲動到該元素失敗", "ERROR")
+            return False
 
     def handle_over18(self):
         try:
             btn = self.driver.find_element(By.XPATH, '/html/body/div[2]/form/div[1]/button')
             btn.click()
-            self.scraper_log.info("已確認18歲")
+            self._log("handle_over18", "success", "已點擊成功")
             return True
         except NoSuchElementException:
             # 沒有跳出18歲頁，正常流程
@@ -53,7 +85,7 @@ class BaseScraper:
         try:
             self.driver.back()
         except NoSuchElementException:
-            self.scraper_log.error("按上一頁失敗")
+            self._log("按上一頁", "failed", "該元素不存在", "ERROR")
             return False
 
     @staticmethod

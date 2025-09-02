@@ -36,38 +36,61 @@
 
 post表格
 
-| 欄位名稱       | 資料型態                      | 說明                |
-|------------|---------------------------|-------------------|
-| pid        | varchar(50) (primary key) | 以文章檔名作為pid(url後綴) |
-| board      | varchar(50)               | 看板名稱              |
-| title      | varchar(255)              | 文章標題              |
-| author     | varchar(100)              | 作者帳號              |
-| content    | TEXT                      | 內文                |
-| created_at | DATETIME                  | 發文時間              |
-| url        | varchar(255)              | 文章連結              |
+| 欄位名稱         | 資料型態              | 說明     |
+|--------------|-------------------|--------|
+| pid          | int (primary key) | 流水號    |
+| board        | varchar(50)       | 看板名稱   |
+| title        | varchar(255)      | 文章標題   |
+| content      | text              | 內文     |
+| author       | varchar(30)       | 作者帳號   |
+| author_ip    | varchar(20)       | 作者發文ip |
+| location     | varchar(20)       | 作者發文國家 |
+| created_date | DATE              | 發文年月日  |
+| created_time | TIME              | 發文時分秒  |
+| url          | varchar(255)      | 文章連結   |
 
 logs表格
 
 | 欄位名稱       | 資料型態              | 說明           |
 |------------|-------------------|--------------|
-| lid        | int (primary key) | LogID 流水號    |
+| lid        | int (primary key) | 流水號          |
 | task_name  | varchar(100)      | 任務名稱         |
 | status     | varchar(20)       | success/fail |
 | message    | TEXT              | 錯誤訊息或摘要      |
 | execute_at | DATETIME          | 執行時間         |
 
-post_log
+comment表格
 
-| 欄位名稱       | 資料型態                  | 說明                       |
-|------------|-----------------------|--------------------------|
-| pid        | varchar(50) (PK & FK) | references from post的pid |
-| lid        | int(PK & FK)          | references from log的lid  |
-| crawled_at | DATETIME              | 爬取時間                     |
+| 欄位名稱         | 資料型態              | 說明    |
+|--------------|-------------------|-------|
+| cid          | int (primary key) | 流水號   |
+| content      | TEXT              | 留言內容  |
+| author       | varchar(50)       | 留言者帳號 |
+| author_ip    | varchar(20)       | 留言內容  |
+| created_date | DATE              | 留言年月日 |
+| created_time | TIME              | 留言時分秒 |
+| is_push      | tinyint           | 是否為推  |
+| is_boo       | tinyint           | 是否為噓  |
+
+PL
+
+| 欄位名稱       | 資料型態     | 說明                       |
+|------------|----------|--------------------------|
+| pid        | int      | references from post的pid |
+| lid        | int      | references from log的lid  |
+| crawled_at | DATETIME | 爬取時間                     |
+
+PC
+
+| 欄位名稱 | 資料型態 | 說明                          |
+|------|------|-----------------------------|
+| pid  | int  | references from post的pid    |
+| cid  | int  | references from comment的cid |
 
 開發時程規劃 (三週)
 
 - Week 1 - 系統架構規劃與爬蟲
-    - 設計資料表 (posts, logs)
+    - 設計資料表 (posts, logs, post_log)
     - 寫 PTT 爬蟲 (OOP 抽象化，支援多個看板)
     - 建立 Celery 排程，定時執行爬蟲
     - docker-compose 建立 MariaDB + FastAPI 開發環境

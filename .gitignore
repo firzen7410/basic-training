@@ -25,3 +25,14 @@ Thumbs.db
 build/
 dist/
 *.egg-info/
+
+#celerybeat-schedule.dat
+#用途：儲存 Celery Beat 的排程任務狀態（上次執行時間、任務列表、下次執行時間…）。
+#格式：二進位檔（pickle）。
+#特性：Celery Beat 會讀寫這個檔案來記住排程進度，讓重啟後仍能接續週期性任務。
+
+#celerybeat-schedule.bak
+#用途：是 celerybeat-schedule.dat 的備份檔，通常 Beat 啟動時會自動生成。
+#作用：如果 .dat 檔案損壞或讀取失敗，Beat 可以用這個備份檔恢復狀態。
+
+celerybeat-schedule*
