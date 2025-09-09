@@ -125,7 +125,10 @@
 
 ### 4. python延伸練習
 
-* logging
+* logging  
+  過往簡單程式的debug方式就是直接將變數印出來，但是當程式規模變大之後，console愈發混亂，因此需要一個專門管理的工具
+    * 主要有兩個角色分別是logger和header，logger是負責產出訊息的地方，header是負責接收訊息的地方，logger有六種等級
+    * 分別對應到該訊息的功能和危急性；header可以綁定到console或file
 * python命名
     * Package（套件）
         * 全小寫
