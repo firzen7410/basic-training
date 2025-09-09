@@ -35,6 +35,14 @@ class DatabaseHandler:
     def insert_post(self, post_data: dict):
         try:
             cursor = self.conn.cursor()
+
+            # 先檢查是否已存在相同 url
+            cursor.execute("SELECT 1 FROM posts WHERE url = %s", (post_data["url"],))
+            if cursor.fetchone() is not None:
+                self._log("insert_post", "skipped", f"文章已存在，跳過: {post_data['url']}")
+                return  # 已存在就不插入
+
+            # 不存在才插入
             sql = """
                   INSERT INTO posts(board, author, author_ip, title, content, location, url, created_date, created_time,
                                     crawled_at)
@@ -54,6 +62,7 @@ class DatabaseHandler:
             ))
             self.conn.commit()
             self._log("insert_post", "success", "插入posts成功")
+
         except Exception as e:
             self._log("insert_post", "failed", f"插入posts失敗:{e}", "ERROR")
             self.conn.rollback()
@@ -62,15 +71,45 @@ class DatabaseHandler:
         try:
             cursor = self.conn.cursor()
             sql = """
-                  insert into comments(content, author, author_ip, created_date, created_time, is_push, is_boo, url)
-                  VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                  INSERT INTO comments(content, author, author_ip, created_date, created_time, is_push, is_boo, url,
+                                       crawled_at)
+                  VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                   """
+
             for comment in comment_data:
-                cursor.execute(sql,
-                               (comment["content"], comment["author"], comment["author_ip"], comment["created_date"],
-                                comment["created_time"], comment["is_push"], comment["is_boo"], comment["url"]))
+                # 先檢查是否已存在相同 comment
+                cursor.execute("""
+                               SELECT 1
+                               FROM comments
+                               WHERE url = %s
+                                 AND author = %s
+                                 AND content = %s
+                                 AND created_date = %s
+                                 AND created_time = %s
+                               """, (comment["url"], comment["author"], comment["content"], comment["created_date"],
+                                     comment["created_time"]))
+
+                if cursor.fetchone() is not None:
+                    self._log("insert_comment", "skipped",
+                              f"Comment 已存在，跳過: {comment['author']} @ {comment['url']}")
+                    continue  # 已存在就跳過
+
+                # 不存在才插入
+                cursor.execute(sql, (
+                    comment["content"],
+                    comment["author"],
+                    comment["author_ip"],
+                    comment["created_date"],
+                    comment["created_time"],
+                    comment["is_push"],
+                    comment["is_boo"],
+                    comment["url"],
+                    comment["crawled_at"]
+                ))
                 self.conn.commit()
+
             self._log("insert_comment", "success", "插入comments成功")
+
         except Exception as e:
             self._log("insert_comment", "failed", f"插入comments失敗:{e}", "ERROR")
             self.conn.rollback()

@@ -54,6 +54,7 @@ class BaseScraper:
             return wait
         except TimeoutException:
             self._log(f"wait_for_element:{value}", "failed", "ERROR:等待元素超時", "ERROR")
+            self.back()
             return None
 
     def move_to_element(self, element):
@@ -65,7 +66,7 @@ class BaseScraper:
                 "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
                 element
             )
-            time.sleep(1)  # 稍微等一下捲動完成
+            time.sleep(3)  # 稍微等一下捲動完成
             return True
         except Exception as e:
             self._log(f"move_to_element:{element}", f"failed:{e}", "捲動到該元素失敗", "ERROR")
@@ -73,6 +74,7 @@ class BaseScraper:
 
     def handle_over18(self):
         try:
+            time.sleep(1)
             btn = self.driver.find_element(By.XPATH, '/html/body/div[2]/form/div[1]/button')
             btn.click()
             self._log("handle_over18", "success", "已點擊成功")
@@ -92,3 +94,14 @@ class BaseScraper:
     def click_element(element):
         element.click()
         return True
+
+    @staticmethod
+    def safe_to_text(element, default=""):
+        """
+        安全地將 Selenium WebElement 或 BeautifulSoup Tag 轉成文字。
+        如果 element 為 None 或沒有 text 屬性，回傳預設值。
+        """
+        try:
+            return element.text.strip() if element and hasattr(element, "text") else default
+        except Exception:
+            return default

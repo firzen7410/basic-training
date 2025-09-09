@@ -1,3 +1,4 @@
+import os
 import logging
 
 
@@ -11,7 +12,8 @@ def set_scraper_log():
     console_handler.setLevel(logging.INFO)
 
     # 建立file_handler
-    file_handler = logging.FileHandler("scraper_log", encoding="utf-8")
+    log_path = os.path.join(os.path.dirname(__file__), "scraper_log")
+    file_handler = logging.FileHandler(log_path, encoding="utf-8")
     file_handler.setLevel(logging.DEBUG)
 
     # 設置formatter

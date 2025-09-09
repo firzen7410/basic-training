@@ -18,7 +18,8 @@ class PttParser:
             "level": level,
             "execute_at": datetime.now()
         }
-        self.db_handler.insert_log(log_data)
+        if level == "WARNING" or level == "ERROR":
+            self.db_handler.insert_log(log_data)
 
         # 同步寫進 scraper_log
         getattr(self.scraper_log, level.lower())(message)
@@ -154,7 +155,7 @@ class PttParser:
             self._log("解析留言的IP、時間資訊", "failed", "該留言沒有時間、IP資訊")
             return None
 
-        ip_datetime_text = ip_datetime_tag.get_text(strip=True)
+        ip_datetime_text = self.safe_to_text(ip_datetime_tag)
 
         try:
             parts = ip_datetime_text.split()
@@ -206,11 +207,12 @@ class PttParser:
             "created_time": None,
             "is_push": 0,
             "is_boo": 0,
-            "url": url
+            "url": url,
+            "crawled_at": None
         }
         # 推噓箭頭
         push_tag_span = comment_tag.select_one("span.push-tag")
-        push_tag = push_tag_span.text.strip()
+        push_tag = self.safe_to_text(push_tag_span)
 
         if push_tag == '推':
             comment_data["is_push"], comment_data["is_boo"] = 1, 0
@@ -223,18 +225,24 @@ class PttParser:
 
         # 作者
         author_tag = comment_tag.find("span", class_="f3 hl push-userid")
-        comment_data["author"] = author_tag.text
+        comment_data["author"] = self.safe_to_text(author_tag)
         self._log("解析作者欄位", "success", f"{comment_data['author']}", "DEBUG")
 
         # 留言內文
         content_tag = comment_tag.find("span", class_="f3 push-content")
         if content_tag:
-            content = content_tag.get_text().lstrip(':').strip()
-            comment_data["content"] = content
+            comment_data["content"] = self.safe_to_text(content_tag).lstrip(":").strip()
         self._log("解析留言內文欄位", "success", f"{comment_data['content']}", "DEBUG")
 
         # IP、日期、時間
         self._parse_comment_datetime(comment_tag, comment_data, year)
+
+        # 取得現在時間
+        now = datetime.now()
+
+        # 轉成 MySQL datetime 格式字串
+        crawled_at = now.strftime("%Y-%m-%d %H:%M:%S")
+        comment_data["crawled_at"] = crawled_at
 
         return comment_data
 
@@ -268,3 +276,16 @@ class PttParser:
 
         except Exception as e:
             self._log("留言解析", "failed", f"{e}", "ERROR")
+
+    @staticmethod
+    def safe_to_text(tag, default=""):
+        """
+        安全地將 BeautifulSoup Tag 或 None 轉成文字。
+        :param tag: BeautifulSoup Tag 或 None
+        :param default: 當 tag 為 None 時回傳的預設值
+        :return: str
+        """
+        try:
+            return tag.get_text(strip=True) if tag else default
+        except Exception:
+            return default
