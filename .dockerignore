@@ -1,0 +1,42 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual env
+.venv/
+env/
+*.egg-info/
+
+# Poetry
+poetry.lock
+# (lock file 通常要保留，除非你想要每次都重新解算依賴)
+
+# Git
+.git/
+.gitignore
+
+# Logs
+*.log
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Tests
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+
+# Data files
+*.db
+*.sqlite
+*.csv
+*.parquet
+*.zip
+*.tar.gz
