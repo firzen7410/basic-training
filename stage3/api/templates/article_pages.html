@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>文章列表</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<h1>文章列表</h1>
+
+<!-- 查詢篩選表單 -->
+<form method="get" action="/posts">
+    <label for="keyword">關鍵字:</label>
+    <input type="text" name="keyword" id="keyword" value="{{ request.query_params.get('keyword', '') }}">
+
+    <label for="author">發文者:</label>
+    <input type="text" name="author" id="author" value="{{ request.query_params.get('author', '') }}">
+
+    <label for="board">版面:</label>
+    <select name="board" id="board">
+        <option value="" {% if not request.query_params.get(
+        'board') %}selected{% endif %}>
+        無
+        </option>
+        {% for option in ["gossiping", "stock", "pc_shopping", "LifeisMoney", "tech_job"] %}
+        <option value="{{ option }}" {% if option== request.query_params.get(
+        'board') %}selected{% endif %}>
+        {{ option }}
+        </option>
+        {% endfor %}
+    </select>
+
+
+    <label for="created_date">發文日期:</label>
+    <input type="date" name="created_date" id="created_date" value="{{ request.query_params.get('created_date', '') }}">
+
+    <label for="created_time">發文時間:</label>
+    <input type="time" name="created_time" id="created_time" value="{{ request.query_params.get('created_time', '') }}">
+    <button type="button" onclick="document.getElementById('created_time').value=''">清除</button>
+
+    <label for="limit">每頁顯示:</label>
+    <select name="limit" id="limit">
+        {% for option in [10, 20, 50, 100] %}
+        <option value="{{ option }}" {% if option== limit %}selected{% endif %}>{{ option }}</option>
+        {% endfor %}
+    </select>
+
+    <input type="hidden" name="page" value="1">
+    <button type="submit">套用</button>
+</form>
+
+<!-- 文章列表 -->
+<ul>
+    {% for post in posts %}
+    <li>
+        <a href="/posts/{{ post.pid }}">
+            <strong>{{ post.title | highlight(keyword) | safe }}</strong>
+        </a>
+        on {{ post.created_date }} {{ post.created_time }} {{ post.board }} {{post.location}} {{ post.author }}
+        {{ post.author_ip }}
+        <pre style="white-space: pre-wrap;">
+            {{ post.content[:100] }}{% if post.content|length > 100 %}...{% endif %}
+        </pre>
+    </li>
+    {% endfor %}
+</ul>
+
+<!-- 分頁導航 -->
+{% set total_pages = (total_count // limit) + (1 if total_count % limit else 0) %}
+<div class="pagination">
+    <span>共 {{ total_pages }} 頁 | 目前頁: {{ page }}</span>
+
+    {% if page > 1 %}
+    <a href="?{% for k,v in prev_query.items() %}{{ k }}={{ v }}&{% endfor %}">上一頁</a>
+    {% else %}
+    <span>上一頁</span>
+    {% endif %}
+
+    {% if page < total_pages %}
+    <a href="?{% for k,v in next_query.items() %}{{ k }}={{ v }}&{% endfor %}">下一頁</a>
+    {% else %}
+    <span>下一頁</span>
+    {% endif %}
+</div>
+</body>
+</html>

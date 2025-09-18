@@ -19,7 +19,7 @@ venv/
 Thumbs.db
 
 # Logs
-*.log
+scraper_log
 
 # Build / packaging
 build/

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }}</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<h1>{{ post.title }}</h1>
+
+<p>
+    <strong>發文者:</strong> {{ post.author }}<br>
+    <strong>版面:</strong> {{ post.board }}<br>
+    <strong>發文時間:</strong> {{ post.created_date }} {{ post.created_time }}
+</p>
+
+<hr>
+
+<div class="post-content">
+    <pre style="white-space: pre-wrap;">{{ post.content }}</pre>
+</div>
+
+<hr>
+
+<a href="/posts">回文章列表</a>
+</body>
+</html>

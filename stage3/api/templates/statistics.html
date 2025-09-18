@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>文章統計</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<h1>文章統計</h1>
+
+<!-- 篩選表單 -->
+<form method="get" action="/statistics">
+    <label for="board">版面:</label>
+    <select name="board" id="board">
+        <option value="" {% if not request.query_params.get('board') %}selected{% endif %}>
+            無
+        </option>
+            {% for option in ["gossiping", "stock", "pc_shopping", "LifeisMoney", "tech_job"] %}
+        <option value="{{ option }}" {% if option== request.query_params.get('board') %}selected{% endif %}>
+            {{ option }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <label for="author">作者:</label>
+    <input type="text" name="author" id="author" value="{{ request.query_params.get('author', '') }}">
+
+    <label for="time_range_start">開始時間:</label>
+    <input type="datetime-local" name="time_range_start" id="time_range_start"
+           value="{{ request.query_params.get('time_range_start', '') }}">
+
+    <label for="time_range_end">結束時間:</label>
+    <input type="datetime-local" name="time_range_end" id="time_range_end"
+           value="{{ request.query_params.get('time_range_end', '') }}">
+
+    <label for="keyword">關鍵字:</label>
+    <input type="text" name="keyword" id="keyword" value="{{ request.query_params.get('keyword', '') }}">
+
+    <button type="submit">查詢</button>
+    <button type="button" onclick="window.location.href='/api/statistics'">清除條件</button>
+</form>
+
+<hr>
+
+<!-- 統計結果 -->
+<div class="statistics">
+    <h2>統計結果</h2>
+    <ul>
+        <li><strong>版面:</strong> {{ board if board else "全部" }}</li>
+        <li><strong>作者:</strong> {{ author if author else "全部" }}</li>
+        <li><strong>開始時間:</strong> {{ time_range_start if time_range_start else "未指定" }}</li>
+        <li><strong>結束時間:</strong> {{ time_range_end if time_range_end else "未指定" }}</li>
+        <li><strong>文章總數:</strong> {{ total_count }}</li>
+    </ul>
+</div>
+</body>

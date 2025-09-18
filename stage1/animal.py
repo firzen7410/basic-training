@@ -22,8 +22,6 @@ def test():
     animal.eat()
 
 
-test()
-
 a = Animal()
 b = Animal()
 

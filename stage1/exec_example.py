@@ -1,4 +1,7 @@
 # 比較step into &step over
+x = 10
+
+
 def calculate(a1, a2) -> int:
     a = add(a1, a2)
     m = multiply(a1, a2)
