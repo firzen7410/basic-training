@@ -22,11 +22,6 @@ def test():
     animal.eat()
 
 
-<<<<<<< HEAD
-test()
-
-=======
->>>>>>> 4f4dad3 ('重置')
 a = Animal()
 b = Animal()
 

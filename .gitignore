@@ -19,11 +19,9 @@ venv/
 Thumbs.db
 
 # Logs
-<<<<<<< HEAD
+
 *.log
-=======
 scraper_log
->>>>>>> 4f4dad3 ('重置')
 
 # Build / packaging
 build/
